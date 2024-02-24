@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .nav {
+      background-color: #daa520;
+    }
+
+    a:link {
+      color: black;
+      text-decoration: none;
+    }
+
+    a:visited {
+      color: black;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: blue;
+      text-decoration: underline;
+    }
+    .record{
+      display: block;
+      margin-left: 3%;
+      margin-right: 3%;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('record') }}">Record</a>
+    </li>
+    <li>
+      <a class="nav-link" href="#">Registration</a>
+    </li>
+  </ul>
+
+  <div class="d-flex gap-2 justify-content-center py-5">
+
+    <div class="record"><p id="win">승리: 0</p></div>
+    <div class="record"><p id="tie">비김: 0</p></div>
+    <div class="record"><p id="lose">패배: 0</p></div>
+
+  </div>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+        ID
+      </div>
+      <div class="col">
+        이름
+      </div>
+      <div class="col">
+        내 선택
+      </div>
+      <div class="col">
+        컴퓨터 선택
+      </div>
+      <div class="col">
+        결과
+      </div>
+    </div>
+  </div>
+  {% for rec in record %}
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+        {{ rec.id }}
+      </div>
+      <div class="col">
+        {{ rec.username }}
+      </div>
+      <div class="col">
+        {{ rec.my }}
+      </div>
+      <div class="col">
+        {{ rec.com }}
+      </div>
+      <div id="res_{{ rec.id }}" class="col">
+        {{ rec.res }}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <script>
+    var text = ''
+    var win = 0
+    var tie = 0
+    var lose = 0
+    var i = 1
+    while(true){
+      text = $('#res_'+i.toString()).text().trim()
+      i+=1
+      console.log(text)
+      if(text == "win"){
+        win+=1
+      } else if(text == "tie"){
+        tie+=1
+      } else if(text == "lose"){
+        lose+=1
+      }
+
+      if(i==30){break}
+    }
+    $('#win').text('승리: '+win.toString())
+    $('#tie').text('비김: '+tie.toString())
+    $('#lose').text('패배: '+lose.toString())
+  </script>
+
+</body>
+
+</html>
